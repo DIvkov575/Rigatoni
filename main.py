@@ -31,18 +31,7 @@ def set_fake_geolocation(driver, latitude, longitude):
     driver.execute_cdp_cmd("Emulation.setGeolocationOverride", params)
 
 def main():
-    print(Colorate.Vertical(Colors.white_to_green, Center.XCenter("""
-           
-                       ▄█   ▄█▄  ▄█    ▄████████    ▄█    █▄     ▄█  
-                       ███ ▄███▀ ███   ███    ███   ███    ███   ███  
-                       ███▐██▀   ███▌  ███    █▀    ███    ███   ███▌ 
-                      ▄█████▀    ███▌  ███         ▄███▄▄▄▄███▄▄ ███▌ 
-                     ▀▀█████▄    ███▌  ███        ▀▀███▀▀▀▀███▀  ███▌ 
-                       ███▐██▄   ███   ███    █▄    ███    ███   ███  
-                       ███ ▀███▄ ███   ███    ███   ███    ███   ███  
-                       ███   ▀█▀ █▀    ████████▀    ███    █▀    █▀   
-                       ▀                                             
-""")))
+    print("-"*5 + "Rigatoni" + "-"*5)
 
     user_agents = [
     # Chrome (Windows)
@@ -93,20 +82,9 @@ def main():
         accounts = file.readlines()
 
     proxies = []
-
-    # use_proxy = input(Colorate.Vertical(Colors.green_to_blue, "Do you want to use proxies? (y/n):"))
-    # if use_proxy.lower() == 'y':
-    #     with open('proxy.txt', 'r') as file:
-    #         proxies = file.readlines()
-    #     time.sleep(3)
-
-    # spotify_song = input(Colorate.Vertical(Colors.green_to_blue, "Enter the Spotify song URL (e.g https://open.spotify.com/track/5hFkGfx038V0LhqI0Uff2J?si=bf290dcc9a994c36):"))
     spotify_song = "https://open.spotify.com/track/5bGWa3ltaNGKkGpASo3Uvt?si=0024aedd312646e0"
-
     drivers = []
 
-    delay = random.uniform(2, 6)
-    delay2 = random.uniform(5, 14)
 
     for account in accounts:
         random_language = random.choice(supported_languages)
@@ -132,59 +110,56 @@ def main():
 
         username, password = account.strip().split(':')
 
+        driver.get("https://www.spotify.com/us/login/")
+        username_input = driver.find_element(By.CSS_SELECTOR, "input#login-username")
+        password_input = driver.find_element(By.CSS_SELECTOR, "input#login-password")
+        username_input.send_keys(username)
+        password_input.send_keys(password)
+
+        driver.find_element(By.CSS_SELECTOR, "button[data-testid='login-button']").click()
+        time.sleep(random.uniform(2, 6))
+
+        driver.get(spotify_song)
+        driver.maximize_window()
+        keyboard.press_and_release('esc')
+        time.sleep(10)
+
         try:
-            driver.get("https://www.spotify.com/us/login/")
-            username_input = driver.find_element(By.CSS_SELECTOR, "input#login-username")
-            password_input = driver.find_element(By.CSS_SELECTOR, "input#login-password")
-            username_input.send_keys(username)
-            password_input.send_keys(password)
-
-            driver.find_element(By.CSS_SELECTOR, "button[data-testid='login-button']").click()
-            time.sleep(delay)
-
-            driver.get(spotify_song)
-            driver.maximize_window()
-            keyboard.press_and_release('esc')
-            time.sleep(10)
-
+            cookie = driver.find_element(By.XPATH, "//button[text()='Accept Cookies']")
+            cookie.click()
+        except NoSuchElementException:
             try:
-                cookie = driver.find_element(By.XPATH, "//button[text()='Accept Cookies']")
-                cookie.click()
+                button = driver.find_element(By.XPATH, "//button[contains(@class,'onetrust-close-btn-handler onetrust-close-btn-ui')]")
+                button.click()
             except NoSuchElementException:
-                try:
-                    button = driver.find_element(By.XPATH, "//button[contains(@class,'onetrust-close-btn-handler onetrust-close-btn-ui')]")
-                    button.click()
-                except NoSuchElementException:
-                    time.sleep(delay2)
+                time.sleep(random.uniform(5, 14))
 
 
 
-            playmusic = driver.find_element(By.CSS_SELECTOR, "#main > div > div.ZQftYELq0aOsg6tPbVbV > div.jEMA2gVoLgPQqAFrPhFw > div.main-view-container > div.main-view-container__scroll-node.main-view-container__scroll-node--offset-topbar > div:nth-child(2) > div > main > section > div:nth-child(3) > div:nth-child(2) > div > div > div > button")
-            playmusic.click()
+        playmusic = driver.find_element(By.CSS_SELECTOR, "#main > div > div.ZQftYELq0aOsg6tPbVbV > div.jEMA2gVoLgPQqAFrPhFw > div.main-view-container > div.main-view-container__scroll-node.main-view-container__scroll-node--offset-topbar > div:nth-child(2) > div > main > section > div:nth-child(3) > div:nth-child(2) > div > div > div > button")
+        playmusic.click()
 
 #            time.sleep(random.uniform(0,1))
-#            repeate_song = driver.find_element(By.XPATH, '//*[@id="main"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[2]')
+        repeate_song = driver.find_element(By.XPATH, '//*[@id="main"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[2]')
 #            repeate_song.click()
 #            time.sleep(random.uniform(0,1))
 #            repeate_song.click()
 
-            print(Colors.green, "Username: {} - Listening process has started.".format(username))
+        state = driver.find_element(
+        print("state 2")
 
-        except Exception as e:
-            print(Colors.red, "An error occurred in the bot system:", str(e))
+        print(Colors.green, f"Username: {username} - Listening process has started.")
+
 
         set_random_timezone(driver)
-        
-        # FAKE LOCATION
         latitude = random.uniform(-90, 90)
         longitude = random.uniform(-180, 180)
         set_fake_geolocation(driver, latitude, longitude)
 
         drivers.append(driver)
 
-        time.sleep(2)
 
-    print(Colors.blue, "Stream operations are completed. You can stop all transactions by closing the program.")
+        print("drviers", drivers)
 
     while True:
         pass
