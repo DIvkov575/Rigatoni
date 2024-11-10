@@ -1,0 +1,5 @@
+.DS_Store
+venv
+accounts.txt
+GoogleChrome.app
+chromedriver
