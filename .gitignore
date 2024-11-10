@@ -2,3 +2,5 @@
 venv
 GoogleChrome.app
 chromedriver
+*/__pycache__
+.idea/
