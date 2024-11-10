@@ -16,8 +16,6 @@ from pystyle import Center, Colors, Colorate
 import time
 
 
-url = "https://github.com/Kichi779/Spotify-Streaming-Bot/"
-
 supported_timezones = pytz.all_timezones
 
 def set_random_timezone(driver):
@@ -103,7 +101,7 @@ def main():
     #     time.sleep(3)
 
     # spotify_song = input(Colorate.Vertical(Colors.green_to_blue, "Enter the Spotify song URL (e.g https://open.spotify.com/track/5hFkGfx038V0LhqI0Uff2J?si=bf290dcc9a994c36):"))
-    spotify_song = "https://open.spotify.com/track/2EDlfcExDTRJsgS2Z3MYwz?si=c7dff35157f7486e"
+    spotify_song = "https://open.spotify.com/track/5bGWa3ltaNGKkGpASo3Uvt?si=0024aedd312646e0"
 
     drivers = []
 
@@ -159,20 +157,16 @@ def main():
                 except NoSuchElementException:
                     time.sleep(delay2)
 
-            print("attempted button press")
 
-
-        # #main > div > div.ZQftYELq0aOsg6tPbVbV > div.jEMA2gVoLgPQqAFrPhFw > div.main-view-container > div.main-view-container__scroll-node.main-view-container__scroll-node--offset-topbar > div:nth-child(2) > div > main > section > div:nth-child(3) > div:nth-child(2) > div > div > div > button
-        #
-        # /html/body/div[6]/div/div[2]/div[4]/div[1]/div[2]/div[2]/div/main/section/div[3]/div[2]/div/div/div/button
-        #
-        # //*[@id="main"]/div/div[2]/div[4]/div[1]/div[2]/div[2]/div/main/section/div[3]/div[2]/div/div/div/button
 
             playmusic = driver.find_element(By.CSS_SELECTOR, "#main > div > div.ZQftYELq0aOsg6tPbVbV > div.jEMA2gVoLgPQqAFrPhFw > div.main-view-container > div.main-view-container__scroll-node.main-view-container__scroll-node--offset-topbar > div:nth-child(2) > div > main > section > div:nth-child(3) > div:nth-child(2) > div > div > div > button")
-
             playmusic.click()
 
-            time.sleep(1)
+#            time.sleep(random.uniform(0,1))
+#            repeate_song = driver.find_element(By.XPATH, '//*[@id="main"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[2]')
+#            repeate_song.click()
+#            time.sleep(random.uniform(0,1))
+#            repeate_song.click()
 
             print(Colors.green, "Username: {} - Listening process has started.".format(username))
 
@@ -188,7 +182,7 @@ def main():
 
         drivers.append(driver)
 
-        time.sleep(5)
+        time.sleep(2)
 
     print(Colors.blue, "Stream operations are completed. You can stop all transactions by closing the program.")
 
