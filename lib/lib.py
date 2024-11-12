@@ -117,8 +117,7 @@ def press_play(driver:ChromiumDriver):
     driver.find_element(By.CSS_SELECTOR, "#main > div > div.ZQftYELq0aOsg6tPbVbV > div.jEMA2gVoLgPQqAFrPhFw > div.main-view-container > div.main-view-container__scroll-node.main-view-container__scroll-node--offset-topbar > div:nth-child(2) > div > main > section > div:nth-child(3) > div:nth-child(2) > div > div > div > button").click()
 
 def enable_repeat(driver: ChromiumDriver):
-    repeat_song = driver.find_element(By.XPATH,
-                                      '//*[@id="main"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[2]')
+    repeat_song = driver.find_element(By.XPATH, '//*[@id="main"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[2]')
     repeat_song_state = repeat_song.get_attribute("aria-label")
     if repeat_song_state == 'Disable repeat':
         repeat_song.click()
@@ -130,6 +129,8 @@ def enable_repeat(driver: ChromiumDriver):
         pass
     else:
         print(Colors.red, "unknown repeat-button state")
+    repeat_song = driver.find_element(By.XPATH, '//*[@id="main"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[2]')
+    print(repeat_song)
 
 def get_song(driver: ChromiumDriver, spotify_song_uri: str):
     driver.get(spotify_song_uri)

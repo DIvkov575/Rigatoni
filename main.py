@@ -1,4 +1,5 @@
 from selenium.webdriver.chromium.webdriver import ChromiumDriver
+from concurrent.futures.thread import ThreadPoolExecutor
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 import random
@@ -10,19 +11,21 @@ from lib.lib import create_driver, authenticate, select_user_agent, set_random_t
     set_fake_geolocation, get_accounts, select_language, press_play, enable_repeat, get_song
 
 
+
 def main():
     print("-" * 8 + "Rigatoni" + "-" * 8)
 
-    driver_path = '../../programming/bot/selenium/chromedriver'
-    accounts_path = '../../programming/bot/selenium/accounts.txt'
-    spotify_song = "https://open.spotify.com/track/5bGWa3ltaNGKkGpASo3Uvt?si=0024aedd312646e0"
+    driver_path = 'assets/chromedriver'
+    accounts_path = 'accounts.txt'
+    spotify_song = "https://open.spotify.com/track/0JJmncqWCKX49RTwJPp9AL?si=2e4dcf4f1d7f4ce8"
+    # spotify_song = "https://open.spotify.com/track/5bGWa3ltaNGKkGpASo3Uvt?si=0024aedd312646e0"
     proxies = []
 
     random_user_agent = select_user_agent()
     accounts = get_accounts(accounts_path)
     drivers = []
 
-    for account in accounts:
+    def spawn(account):
         username = account['username']
         password = account['password']
 
@@ -52,6 +55,9 @@ def main():
         drivers.append(driver)
 
         print(f"Username: {username} - Listening process has started.")
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        results = list(executor.map(spawn, accounts))
+
 
     while True:
         pass
