@@ -129,8 +129,8 @@ def enable_repeat(driver: ChromiumDriver):
         pass
     else:
         print(Colors.red, "unknown repeat-button state")
-    repeat_song = driver.find_element(By.XPATH, '//*[@id="main"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[2]')
-    print(repeat_song)
+    repeat_song_state = driver.find_element(By.XPATH, '//*[@id="main"]/div/div[2]/div[3]/footer/div/div[2]/div/div[1]/div[2]/button[2]').get_attributes("aria-label")
+    print(repeat_song_state)
 
 def get_song(driver: ChromiumDriver, spotify_song_uri: str):
     driver.get(spotify_song_uri)
