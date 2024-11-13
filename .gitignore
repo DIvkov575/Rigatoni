@@ -1,6 +1,9 @@
 .DS_Store
-venv
+.idea/
+
 assets/GoogleChrome.app
 assets/chromedriver
-*/__pycache__
-.idea/
+assets/accounts.txt
+
+venv
+lib/__pycache__
