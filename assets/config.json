@@ -1,0 +1,10 @@
+{
+"Accounts": [
+   {
+    "username": "musicfrequencys@gmail.com",
+    "password": "Dima1234",
+    "playlists": ["https://open.spotify.com/playlist/1uqAtFEvDCUEwHouRP4Ogx?si=TBIQLRqQTv-SN5OGPyOkBw"]
+  }
+],
+"Proxies" : []
+}
